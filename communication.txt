@@ -1,0 +1,22 @@
+// Pseudocode for communication Alice2Bob
+
+create a Socket
+read input
+load circuit
+encrypt circuit
+establish a connection to Bob
+send circuit 
+send her key concatenated with e
+receives encrypted output
+decrypts output and has result
+
+// Pseudocode for communication Bob2Alice
+
+create a socket
+read input
+listen for Alice
+read circuit
+get his e from ot
+compute result
+output result
+send encrypted output to alice

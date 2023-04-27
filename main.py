@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 import logging
 import ot
-import sympy
-import util as util
+import util
 import yao
 from abc import ABC, abstractmethod
 
@@ -89,17 +88,17 @@ class Alice(YaoGarbler):
         print(f"======== {circuit['id']} ========")
 
         # Generate all inputs for both Alice and Bob
-        for bits in [format(n, 'b').zfill(N) for n in range(2**N)]: # iterating through possible bits: 000, 001, 010,...
+        for bits in [format(n, 'b').zfill(N) for n in range(2**N)]:
             bits_a = [int(b) for b in bits[:len(a_wires)]]  # Alice's inputs
-            print(bits_a)
-            print(bits)
+
             # Map Alice's wires to (key, encr_bit)
             for i in range(len(a_wires)):
                 a_inputs[a_wires[i]] = (keys[a_wires[i]][bits_a[i]],
                                         pbits[a_wires[i]] ^ bits_a[i])
+
             # Send Alice's encrypted inputs and keys to Bob
             result = self.ot.get_result(a_inputs, b_keys)
-            print("Result", result)
+
             # Format output
             str_bits_a = ' '.join(bits[:len(a_wires)])
             str_bits_b = ' '.join(bits[len(a_wires):])

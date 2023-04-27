@@ -67,7 +67,7 @@ def evaluate(circuit, g_tables, pbits_out, a_inputs, b_inputs):
         elif (gate_in[0] in wire_inputs) and (gate_in[1] in wire_inputs):
             key_a, encr_bit_a = wire_inputs[gate_in[0]]
             key_b, encr_bit_b = wire_inputs[gate_in[1]]
-            encr_msg = g_tables[gate_id][(encr_bit_a, encr_bit_b)] # choose the right row
+            encr_msg = g_tables[gate_id][(encr_bit_a, encr_bit_b)]
             msg = decrypt(key_b, decrypt(key_a, encr_msg))
         if msg:
             wire_inputs[gate_id] = pickle.loads(msg)
@@ -150,24 +150,17 @@ class GarbledGate:
         # Same model as for the NOT gate except for 2 inputs instead of 1
         for encr_bit_a in (0, 1):
             for encr_bit_b in (0, 1):
-                # Retrieve original bit
                 bit_a = encr_bit_a ^ self.pbits[in_a]
                 bit_b = encr_bit_b ^ self.pbits[in_b]
-                # Compute output bit according to the gate type
                 bit_out = int(operator(bit_a, bit_b))
-                # Compute encrypted bit with the p-bit table
                 encr_bit_out = bit_out ^ self.pbits[out]
-                # Retrieve related keys
                 key_a = self.keys[in_a][bit_a]
                 key_b = self.keys[in_b][bit_b]
                 key_out = self.keys[out][bit_out]
 
-                # Serialize the output key along with the encrypted bit
                 msg = pickle.dumps((key_out, encr_bit_out))
-                # Encrypt message and add it to the garbled table
                 self.garbled_table[(encr_bit_a, encr_bit_b)] = encrypt(
                     key_a, encrypt(key_b, msg))
-                # Add to the clear table indexes of each keys
                 self.clear_garbled_table[(encr_bit_a, encr_bit_b)] = [
                     (in_a, bit_a), (in_b, bit_b), (out, bit_out), encr_bit_out
                 ]
@@ -177,7 +170,7 @@ class GarbledGate:
         print(f"GATE: {self.output}, TYPE: {self.gate_type}")
         for k, v in self.clear_garbled_table.items():
             # If it's a 2-input gate
-            if len(k) > 1: 
+            if len(k) > 1:
                 key_a, key_b, key_out = v[0], v[1], v[2]
                 encr_bit_out = v[3]
                 print(f"[{k[0]}, {k[1]}]: "
