@@ -20,12 +20,12 @@ class ObliviousTransfer:
         Returns:
             The result of the yao circuit evaluation.
         """
-        logging.debug("Sending inputs to Bob")
+        print("Sending inputs to Bob")
         self.socket.send(a_inputs)
 
         for _ in range(len(b_keys)):
             w = self.socket.receive()  # receive gate ID where to perform OT
-            logging.debug(f"Received gate ID {w}")
+            print(f"Received gate ID {w} where to perform OT")
 
             if self.enabled:  # perform oblivious transfer
                 pair = (pickle.dumps(b_keys[w][0]), pickle.dumps(b_keys[w][1]))
@@ -33,8 +33,10 @@ class ObliviousTransfer:
             else:
                 to_send = (b_keys[w][0], b_keys[w][1])
                 self.socket.send(to_send)
-
-        return self.socket.receive()
+        result =  self.socket.receive()
+        #bob_input = self.socket.receive()
+        
+        return result#, bob_input
 
     def send_result(self, circuit, g_tables, pbits_out, b_inputs):
         """Evaluate circuit and send the result to Alice.
@@ -50,26 +52,26 @@ class ObliviousTransfer:
         # map from Bob's wires to (key, encr_bit) inputs
         b_inputs_encr = {}
 
-        logging.debug("Received Alice's inputs")
+        print("Received Alice's inputs")
 
         for w, b_input in b_inputs.items():
-            logging.debug(f"Sending gate ID {w}")
+            print(f"Sending gate ID {w} where to perform OT")
             self.socket.send(w)
 
             if self.enabled:
                 b_inputs_encr[w] = pickle.loads(self.ot_evaluator(b_input))
             else:
                 pair = self.socket.receive()
-                logging.debug(f"Received key pair, key {b_input} selected")
+                print(f"Received key pair, key {b_input} selected")
                 b_inputs_encr[w] = pair[b_input]
-        print("a_inputs", a_inputs)
-        print("b_inputs_encr", b_inputs_encr)
         result = yao.evaluate(circuit, g_tables, pbits_out, a_inputs,
                               b_inputs_encr)
         
-        logging.debug("Sending circuit evaluation")
+        print("Sending circuit evaluation")
         print(result)
-        self.socket.send(result)
+        self.socket.send((result, b_inputs))
+        #self.socket.send(b_inputs)
+        return result
 
     def ot_garbler(self, msgs):
         """Oblivious transfer, Alice's side.
@@ -77,7 +79,7 @@ class ObliviousTransfer:
         Args:
             msgs: A pair (msg1, msg2) to suggest to Bob.
         """
-        logging.debug("OT protocol started")
+        print("OT protocol started")
         G = util.PrimeGroup()
         self.socket.send_wait(G)
 
@@ -91,7 +93,7 @@ class ObliviousTransfer:
         e1 = util.xor_bytes(msgs[1], self.ot_hash(G.pow(h1, k), len(msgs[1])))
 
         self.socket.send((c1, e0, e1))
-        logging.debug("OT protocol ended")
+        print("OT protocol ended")
 
     def ot_evaluator(self, b):
         """Oblivious transfer, Bob's side.
@@ -102,7 +104,7 @@ class ObliviousTransfer:
         Returns:
             The message selected by Bob.
         """
-        logging.debug("OT protocol started")
+        print("OT protocol started")
         G = self.socket.receive()
         self.socket.send(True)
 
@@ -116,7 +118,7 @@ class ObliviousTransfer:
         ot_hash = self.ot_hash(G.pow(c1, x), len(e[b]))
         mb = util.xor_bytes(e[b], ot_hash)
 
-        logging.debug("OT protocol ended")
+        print("got correct key OT protocol ended")
         return mb
 
     @staticmethod

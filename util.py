@@ -79,13 +79,6 @@ def bits(num, width):
     """Convert number into a list of bits."""
     return [int(k) for k in f'{num:0{width}b}']
 
-def bits_to_integer(bitlist):
-    """Convert bits in a list to an integer using bitshifting from stackoverflow: https://stackoverflow.com/questions/12461361/bits-list-to-integer-in-python"""
-    out = 0
-    for bit in bitlist:
-        out = (out << 1) | bit
-    return out
-
 class PrimeGroup:
     """Cyclic abelian group of prime order 'prime'."""
     def __init__(self, prime=None):

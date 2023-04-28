@@ -166,16 +166,16 @@ class GarbledGate:
                 ]
 
     def print_garbled_table(self):
-        """Print a clear representation of the garbled table."""
+        """Print the send garbled tables from alice to bob."""
         print(f"GATE: {self.output}, TYPE: {self.gate_type}")
         for k, v in self.clear_garbled_table.items():
             # If it's a 2-input gate
             if len(k) > 1:
                 key_a, key_b, key_out = v[0], v[1], v[2]
                 encr_bit_out = v[3]
-                print(f"[{k[0]}, {k[1]}]: "
-                      f"[{key_a[0]}, {key_a[1]}][{key_b[0]}, {key_b[1]}]"
-                      f"([{key_out[0]}, {key_out[1]}], {encr_bit_out})")
+                print(
+                      f"[{key_a[0]}, {key_a[1]}][{key_b[0]}, {key_b[1]}]: "
+                      f"encrypted content")
             # Else it's a NOT gate
             else:
                 key_in, key_out = v[0], v[1]
@@ -234,9 +234,7 @@ class GarbledCircuit:
             self.garbled_tables[gate["id"]] = garbled_gate.get_garbled_table()
 
     def print_garbled_tables(self):
-        """Print p-bits and a clear representation of all garbled tables."""
-        print(f"======== {self.circuit['id']} ========")
-        print(f"P-BITS: {self.pbits}")
+        """Print a clear representation of all garbled tables."""
         for gate in self.gates:
             garbled_table = GarbledGate(gate, self.keys, self.pbits)
             garbled_table.print_garbled_table()
