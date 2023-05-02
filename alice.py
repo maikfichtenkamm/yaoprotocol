@@ -68,24 +68,24 @@ class My_Alice(Alice):
         # print alice to bob
         self.print_alice_to_bob(entry, input, a_inputs)
         # Send Alice's encrypted inputs and keys
-        output = self.ot.get_result(a_inputs, b_keys)
-        result, input_bob = output
-        input_bob = helpers.print_correct_result(input_bob)
-       
+        result = self.ot.get_result(a_inputs, b_keys)
+        
         # get the output and print it also for Alice
-        return helpers.print_correct_result(result), input_bob
+        return helpers.print_correct_result(result)
     
 def main():
-    input = helpers.get_inputs(upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    if sys.argv[1]:
+        input = helpers.get_inputs_from_file(path=sys.argv[1], upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    else: 
+        input = helpers.get_inputs(upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    print(input)
     alice = My_Alice(circuits='4bit-adder.json')
-    result, input_bob = alice.start(input)
+    result = alice.start(input)
     # TODO result, bob_input = alice.start(input)
     # TODO result, bob_input = encrypt()
     print("The common sum of Bob and Alice is: ", result)
-    verfiy_output(input, input_bob, result)
+    helpers.verify_output(path_alice='alice_inputs.txt', path_bob='bob_inputs.txt', result)
 
-def verfiy_output(alice_input, bob_input, output):
-    print("Successful computation") if ((alice_input + bob_input) == output) else print("Incorrect result!")
 
 if __name__ == '__main__':
     main()  

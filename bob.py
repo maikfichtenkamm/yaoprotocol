@@ -54,7 +54,10 @@ class My_Bob(Bob):
         return result
 
 def main():
-    input = helpers.get_inputs(upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    if sys.argv[1]: # read inputs from a textfile
+        input = helpers.get_inputs_from_file(path=sys.argv[1], upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    else: # read inputs from a textfile 
+        input = helpers.get_inputs(upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
     print("The accumulated sum of Bob is ", input, " and is used as input for MPC")
     bob = My_Bob()
     result = bob.listen(input)

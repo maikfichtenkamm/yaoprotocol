@@ -36,7 +36,7 @@ class ObliviousTransfer:
         result =  self.socket.receive()
         #bob_input = self.socket.receive()
         
-        return result#, bob_input
+        return result
 
     def send_result(self, circuit, g_tables, pbits_out, b_inputs):
         """Evaluate circuit and send the result to Alice.
@@ -69,7 +69,7 @@ class ObliviousTransfer:
         
         print("Sending circuit evaluation")
         print(result)
-        self.socket.send((result, b_inputs))
+        self.socket.send(result)
         #self.socket.send(b_inputs)
         return result
 

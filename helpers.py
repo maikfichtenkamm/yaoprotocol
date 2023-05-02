@@ -18,6 +18,20 @@ def get_inputs(upper_bound, error_msg):
         raise Exception(error_msg)
     return final_input
 
+def get_inputs_from_file(path, upper_bound, error_msg):
+    with open(path) as file:
+        inputs = file.readline()
+        final_input = sum(list(map(int, inputs.split(","))))
+    if final_input > upper_bound:
+        raise Exception(error_msg)
+    return final_input
+
+def verify_output(path_alice, path_bob, result):
+    # get the inputs
+    input_alice = get_inputs_from_file(path=path_alice, upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    input_bob = get_inputs_from_file(path=path_bob, upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    print("Successful computation") if ((input_alice + input_bob) == result) else print("Incorrect computation!")
+
 def bits_to_integer(bitlist):
     """Convert bits in a list to an integer using bitshifting from stackoverflow: https://stackoverflow.com/questions/12461361/bits-list-to-integer-in-python
 
@@ -45,3 +59,4 @@ def print_correct_result(result):
     output = list(result.values())
     output = output[::-1]
     return bits_to_integer(output)
+
