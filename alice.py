@@ -6,25 +6,48 @@ import ot
 from main import *
 import sys
 
-class My_Alice(Alice):
 
-    def __init__(self, circuits, oblivious_transfer=True):
-        super().__init__(circuits, oblivious_transfer)
+class My_Alice(Alice):
+    """ My_Alice is an adapted version of the ALice class of given Python library "Secure Multi-Party Computation" by Olivier Ruques and Emmanuelle Risson, available at https://github.com/ojroques/garbled-circuit
+    In particular, I renamed the print method to alice_mpc_compute and added the print_alice_to_bob method:
+
+    Alice creates a Yao circuit and sends it to the evaluator along with her
+    encrypted inputs. Alice prints the contents she sends to the evaluator (Bob): the overview of the circuit, the garbled tables and the external values
+    Alice receives the result of the computation and prints it.
+
+    Args:
+        Alice (YaoGarbler): The Alice class of the Python library Secure Multi-Party Computation with similar functionality
+    """    
+    
 
     def start(self, input):
-        """Start Yao protocol."""
+        """ Starts the yao protocol and sends Alice contents to Bob: the overview of the circuit, the garbled tables and the external values
+
+        Args:
+            input (int): The input of Alice for the computation read from a file or typed in console
+
+        Returns:
+            int: The result of the computation
+        """        
         for circuit in self.circuits:
             to_send = {
                 "circuit": circuit["circuit"],
                 "garbled_tables": circuit["garbled_tables"],
                 "pbits_out": circuit["pbits_out"],
             }
-            
+
             logging.debug(f"Sending {circuit['circuit']['id']}")
             self.socket.send_wait(to_send)
             return self.alice_mpc_compute(circuit, input)
-        
+
     def print_alice_to_bob(self, circuit, input, a_inputs):
+        """Prints the contents Alice sends to the evaluator (Bob) at the beginning of the yao protocol: the overview of the circuit, the garbled tables and the external values
+
+        Args:
+            circuit (_type_): _description_
+            input (_type_): _description_
+            a_inputs (_type_): _description_
+        """        
         # print input
         print("Alice input is the accumulated sum ", input, " !")
         # print the circuit
@@ -33,13 +56,15 @@ class My_Alice(Alice):
         # print the send garbled tables
         print("Alice sends the following garbled tables to Bob.")
         print("The gates are shown in the order in which they are evaluated. In addition, all combinations of the external values of input wires of a gate are transmitted and their encrypted contents.")
-        print("These are shown in the form: [input_wire_a, e_value_a][input_wire_b, e_value_b]: encrypted content of output")
+        print(
+            "These are shown in the form: [input_wire_a, e_value_a][input_wire_b, e_value_b]: encrypted content of output")
         circuit["garbled_circuit"].print_garbled_tables()
         print("Also the e values are public and especially the e values of the output are important for evaluation by Bob")
         print("PBITSOUT", circuit["pbits_out"])
         print("Finally, Alice sends the keys for all her inputs and the corresponding e values")
         for wire, content in a_inputs.items():
-            print(f"Alice sends for wire {wire} the key {content[0]} and the e value {content[1]}")
+            print(
+                f"Alice sends for wire {wire} the key {content[0]} and the e value {content[1]}")
 
     def alice_mpc_compute(self, entry, input):
         """ Renamed Print to alice mpc compute
@@ -69,23 +94,27 @@ class My_Alice(Alice):
         self.print_alice_to_bob(entry, input, a_inputs)
         # Send Alice's encrypted inputs and keys
         result = self.ot.get_result(a_inputs, b_keys)
-        
+
         # get the output and print it also for Alice
         return helpers.print_correct_result(result)
-    
+
+
 def main():
-    if sys.argv[1]:
-        input = helpers.get_inputs_from_file(path=sys.argv[1], upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
-    else: 
-        input = helpers.get_inputs(upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    if len(sys.argv) > 1:
+        input = helpers.get_inputs_from_file(
+            path=sys.argv[1], upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    else:
+        input = helpers.get_inputs(
+            upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
     print(input)
     alice = My_Alice(circuits='4bit-adder.json')
     result = alice.start(input)
     # TODO result, bob_input = alice.start(input)
     # TODO result, bob_input = encrypt()
     print("The common sum of Bob and Alice is: ", result)
-    helpers.verify_output(path_alice='alice_inputs.txt', path_bob='bob_inputs.txt', result)
+    helpers.verify_output(path_alice='alice_inputs.txt',
+                          path_bob='bob_inputs.txt', result=result)
 
 
 if __name__ == '__main__':
-    main()  
+    main()

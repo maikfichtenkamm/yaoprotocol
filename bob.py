@@ -54,7 +54,7 @@ class My_Bob(Bob):
         return result
 
 def main():
-    if sys.argv[1]: # read inputs from a textfile
+    if len(sys.argv) > 1: # read inputs from a textfile
         input = helpers.get_inputs_from_file(path=sys.argv[1], upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
     else: # read inputs from a textfile 
         input = helpers.get_inputs(upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
