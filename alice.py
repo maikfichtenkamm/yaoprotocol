@@ -47,24 +47,41 @@ class My_Alice(Alice):
             circuit (_type_): _description_
             input (_type_): _description_
             a_inputs (_type_): _description_
-        """        
+        """ 
+
+        original_stdout = sys.stdout
+        with open('alice_to_bob.py', 'w') as f:
+
         # print input
-        print("Alice input is the accumulated sum ", input, " !")
+            f.write(f"Alice input is the accumulated sum {input}!")
         # print the circuit
-        print("Alice and Bob use the circuit of a 4-bit full adder. The circuit representation is printed in the following. Refer to the documentation for a better overview")
-        print(circuit["circuit"])
-        # print the send garbled tables
-        print("Alice sends the following garbled tables to Bob.")
-        print("The gates are shown in the order in which they are evaluated. In addition, all combinations of the external values of input wires of a gate are transmitted and their encrypted contents.")
-        print(
-            "These are shown in the form: [input_wire_a, e_value_a][input_wire_b, e_value_b]: encrypted content of output")
-        circuit["garbled_circuit"].print_garbled_tables()
-        print("Also the e values are public and especially the e values of the output are important for evaluation by Bob")
-        print("PBITSOUT", circuit["pbits_out"])
-        print("Finally, Alice sends the keys for all her inputs and the corresponding e values")
-        for wire, content in a_inputs.items():
-            print(
-                f"Alice sends for wire {wire} the key {content[0]} and the e value {content[1]}")
+            f.write("Alice and Bob use the circuit of a 4-bit full adder. The circuit representation is printed in the following. Refer to the documentation for a better overview")
+            #f.write(circuit["circuit"])
+            # print the send garbled tables
+            f.write("Alice sends the following garbled tables to Bob.")
+            f.write("The gates are shown in the order in which they are evaluated. In addition, all combinations of the external values of input wires of a gate are transmitted and their encrypted contents.")
+            f.write(
+                "These are shown in the form: [input_wire_a, e_value_a][input_wire_b, e_value_b]: encrypted content of output")
+            # print the garbled tables: 
+            garbled_circuit = circuit["garbled_circuit"]
+            for gate in garbled_circuit.gates:
+                print(f"Gate number {gate.id} of type {gate.type}:")
+                for k, v in self.clear_garbled_table.items():
+                    print(f"[{gate.input[0]}, {k[0]}] [{gate.input[1]}, {k[1]}]: {v}")
+                garbled_gate = yao.GarbledGate(gate, garbled_circuit.keys, garbled_circuit.pbits)
+                print("Table REAL", garbled_gate.garbled_table)
+                break
+
+            circuit["garbled_circuit"].print_garbled_tables()
+
+
+            f.write("Also the e values are public and especially the e values of the output are important for evaluation by Bob")
+            #f.write("PBITSOUT", circuit["pbits_out"])
+            f.write("Finally, Alice sends the keys for all her inputs and the corresponding e values")
+            for wire, content in a_inputs.items():
+                f.write(
+                    f"Alice sends for wire {wire} the key {content[0]} and the e value {content[1]}")
+            
 
     def alice_mpc_compute(self, entry, input):
         """ Renamed Print to alice mpc compute
@@ -109,8 +126,6 @@ def main():
     print(input)
     alice = My_Alice(circuits='4bit-adder.json')
     result = alice.start(input)
-    # TODO result, bob_input = alice.start(input)
-    # TODO result, bob_input = encrypt()
     print("The common sum of Bob and Alice is: ", result)
     helpers.verify_output(path_alice='alice_inputs.txt',
                           path_bob='bob_inputs.txt', result=result)

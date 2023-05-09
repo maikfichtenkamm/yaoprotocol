@@ -175,7 +175,8 @@ class GarbledGate:
                 encr_bit_out = v[3]
                 print(
                       f"[{key_a[0]}, {key_a[1]}][{key_b[0]}, {key_b[1]}]: "
-                      f"encrypted content")
+                      f"([{key_out[0]}, {key_out[1]}], {encr_bit_out})")
+                      #f"encrypted content")
             # Else it's a NOT gate
             else:
                 key_in, key_out = v[0], v[1]
