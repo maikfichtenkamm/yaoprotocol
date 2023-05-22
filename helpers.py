@@ -28,8 +28,8 @@ def get_inputs_from_file(path, upper_bound, error_msg):
 
 def verify_output(path_alice, path_bob, result):
     # get the inputs
-    input_alice = get_inputs_from_file(path=path_alice, upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
-    input_bob = get_inputs_from_file(path=path_bob, upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
+    input_alice = get_inputs_from_file(path=path_alice, upper_bound=15, error_msg="only numbers smaller than 16 are supported! Enter smaller numbers")
+    input_bob = get_inputs_from_file(path=path_bob, upper_bound=15, error_msg="only numbers smaller than 16 are supported! Enter smaller numbers")
     print("Successful computation") if ((input_alice + input_bob) == result) else print("Incorrect computation!")
 
 def bits_to_integer(bitlist):

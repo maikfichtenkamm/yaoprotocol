@@ -3,15 +3,12 @@
   "circuits": [
     {
     "id": "4-bit full adder",
-    "alice": [2, 12, 22, 32, 100],
+    "alice": [2, 12, 22, 32],
     "bob": [3, 13, 23, 33],
     "out": [5, 15, 25, 35, 41],
     "gates": [
-      {"id": 4, "type": "XOR", "in": [2, 3]},
-      {"id": 5, "type": "XOR", "in": [100, 4]},
-      {"id": 6, "type": "AND", "in": [2, 3]},
-      {"id": 7, "type": "AND", "in": [100, 4]},
-      {"id": 11, "type": "OR", "in": [6, 7]},
+      {"id": 5, "type": "XOR", "in": [2, 3]},
+      {"id": 11, "type": "AND", "in": [2, 3]},
 
       {"id": 14, "type": "XOR", "in": [12, 13]},
       {"id": 15, "type": "XOR", "in": [11, 14]},

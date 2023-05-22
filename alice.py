@@ -50,37 +50,34 @@ class My_Alice(Alice):
         """ 
 
         original_stdout = sys.stdout
-        with open('alice_to_bob.py', 'w') as f:
+        with open('alice_to_bob.txt', 'w') as f:
 
         # print input
-            f.write(f"Alice input is the accumulated sum {input}!")
+            f.write(f"Alice input is the accumulated sum {input}!\n")
         # print the circuit
-            f.write("Alice and Bob use the circuit of a 4-bit full adder. The circuit representation is printed in the following. Refer to the documentation for a better overview")
-            #f.write(circuit["circuit"])
+            f.write("Alice and Bob use the circuit of a 4-bit full adder, which Alice sends to Bob. The circuit json representation is printed in the following. Refer to the documentation for a better overview\n")
+            f.write(str(circuit["circuit"]))
             # print the send garbled tables
-            f.write("Alice sends the following garbled tables to Bob.")
-            f.write("The gates are shown in the order in which they are evaluated. In addition, all combinations of the external values of input wires of a gate are transmitted and their encrypted contents.")
+            f.write("\nAlice sends the following garbled tables to Bob.\n")
+            f.write("The gates are shown in the order in which they are evaluated. In addition, all combinations of the external values of input wires of a gate are transmitted and their encrypted contents.\n")
             f.write(
-                "These are shown in the form: [input_wire_a, e_value_a][input_wire_b, e_value_b]: encrypted content of output")
+                "These are shown in the form: [input_wire_a, e_value_a][input_wire_b, e_value_b]: encrypted content of output\n")
             # print the garbled tables: 
             garbled_circuit = circuit["garbled_circuit"]
             for gate in garbled_circuit.gates:
-                print(f"Gate number {gate.id} of type {gate.type}:")
-                for k, v in self.clear_garbled_table.items():
-                    print(f"[{gate.input[0]}, {k[0]}] [{gate.input[1]}, {k[1]}]: {v}")
+                f.write(f"Gate number {gate['id']} of type {gate['type']}:\n")
+
                 garbled_gate = yao.GarbledGate(gate, garbled_circuit.keys, garbled_circuit.pbits)
-                print("Table REAL", garbled_gate.garbled_table)
-                break
+                for k, v in garbled_gate.garbled_table.items():
+                    f.write(f"[{gate['in'][0]}, {k[0]}] [{gate['in'][1]}, {k[1]}]: {v}\n")
+                
 
-            circuit["garbled_circuit"].print_garbled_tables()
-
-
-            f.write("Also the e values are public and especially the e values of the output are important for evaluation by Bob")
-            #f.write("PBITSOUT", circuit["pbits_out"])
-            f.write("Finally, Alice sends the keys for all her inputs and the corresponding e values")
+            f.write("Also the e values are public and especially the e values of the output are important for evaluation by Bob\nE-Values for the output wires: ")
+            f.write(str(circuit["pbits_out"]))
+            f.write("\nFinally, Alice sends the keys for all her inputs and the corresponding e values\n")
             for wire, content in a_inputs.items():
                 f.write(
-                    f"Alice sends for wire {wire} the key {content[0]} and the e value {content[1]}")
+                    f"Alice sends for wire {wire} the key {content[0]} and the e value {content[1]}\n")
             
 
     def alice_mpc_compute(self, entry, input):
@@ -90,7 +87,7 @@ class My_Alice(Alice):
         Args:
             entry: A dict representing the circuit to evaluate.
         """
-        inputs = util.bits(input, 5)
+        inputs = util.bits(input, 4)
         inputs = inputs[::-1]
         circuit, pbits, keys = entry["circuit"], entry["pbits"], entry["keys"]
         outputs = circuit["out"]
@@ -123,11 +120,12 @@ def main():
     else:
         input = helpers.get_inputs(
             upper_bound=15, error_msg="only 4bit numbers supported! Enter smaller numbers")
-    print(input)
+    print("The accumulated sum of Bob is ", input, " and is used as input for MPC")
     alice = My_Alice(circuits='4bit-adder.json')
     result = alice.start(input)
     print("The common sum of Bob and Alice is: ", result)
-    helpers.verify_output(path_alice='alice_inputs.txt',
+    if len(sys.argv) > 1:
+        helpers.verify_output(path_alice='alice_inputs.txt',
                           path_bob='bob_inputs.txt', result=result)
 
 

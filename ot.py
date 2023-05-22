@@ -68,7 +68,6 @@ class ObliviousTransfer:
                               b_inputs_encr)
         
         print("Sending circuit evaluation")
-        print(result)
         self.socket.send(result)
         #self.socket.send(b_inputs)
         return result

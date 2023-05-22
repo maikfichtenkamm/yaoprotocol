@@ -61,8 +61,11 @@ def main():
     print("The accumulated sum of Bob is ", input, " and is used as input for MPC")
     bob = My_Bob()
     result = bob.listen(input)
-    output = helpers.print_correct_result(result)
-    print("The common sum of Bob and Alice is: ", output)
-
+    result = helpers.print_correct_result(result)
+    print("The common sum of Bob and Alice is: ", result)
+    if len(sys.argv) > 1:
+        helpers.verify_output(path_alice='alice_inputs.txt',
+                          path_bob='bob_inputs.txt', result=result)
+        
 if __name__ == '__main__':
     main()  
