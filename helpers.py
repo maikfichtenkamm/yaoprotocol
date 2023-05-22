@@ -24,7 +24,7 @@ def get_inputs(upper_bound, error_msg):
 
 
 def get_inputs_from_file(path, upper_bound, error_msg):
-    """_summary_
+    """Extracts the user input from a textfile
 
     Args:
         path (str): path to the input file
