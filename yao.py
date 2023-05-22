@@ -1,3 +1,6 @@
+""" Module which is copied from the Python library "Secure Multi-Party Computation" by Olivier Ruques and Emmanuelle Risson,
+     available at https://github.com/ojroques/garbled-circuit.
+"""
 import pickle
 import random
 from cryptography.fernet import Fernet

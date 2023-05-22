@@ -1,5 +1,7 @@
+""" Module which is copied from the Python library "Secure Multi-Party Computation" by Olivier Ruques and Emmanuelle Risson,
+     available at https://github.com/ojroques/garbled-circuit.
+"""
 import sys
-sys.path.append('/home/maikfi/intro2cyber/yao/lib/python3.10/site-packages') 
 import json
 import operator
 import random
