@@ -93,6 +93,7 @@ Then, the communication of the OT, the result of the evaluated circuit and the c
 ## References
 
 Roques, Olivier; Risson, Emmanuelle (2020): Secure Multi-Party Computation. A two-party secure function evaluation using Yao's garbled circuit protocol. Version v2.0. Online verfügbar unter https://github.com/ojroques/garbled-circuit.
+
 Saini, Manish (2022): Difference between Half Adder and Full Adder. Hg. v. tutorialspoint. Online verfügbar unter https://www.tutorialspoint.com/difference-between-half-adder-and-full-adder.
 
 
