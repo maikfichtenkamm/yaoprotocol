@@ -50,22 +50,22 @@ From the given GitHub repository (Roques und Risson 2020), I reused the modules 
   -	My_Alice(): main class for the garbler.
     - start(): starts the Yao protocol and send the circuit, garbled tables, external values.
     - print_alice_to_bob(): prints the contents Alice sends to Bob at the beginning of the Yao protocol in the file alice_to_bob.txt.
-    - alice_mpc_compute(): sends the inputs of Alice to Bob, to call the function get_result() of the ot.py module (which contains the garbler OT), and to get the result of the Yao circuit   evaluation.
-o	main(): gets the inputs of Alice, initializes My_Alice() and calls the verify_output() function.
-•	alice_inputs.txt: specifies the inputs of Alice.
-•	alice_to_bob.txt: storing the contents Alice sends to Bob at the beginning of the Yao protocol before the evaluation.
-•	bob.py: implements the evaluator (Bob) side of the Yao protocol.
-o	My_Bob(): main class for the evaluator.
-	listen(): listens for the contents of Alice at the beginning of the Yao protocol and then calls bob_mpc_compute().
-	bob_mpc_compute(): calls the function get_result() of the ot.py module (which contains the evaluator OT and evaluates the Yao circuit), and gets the result of the Yao circuit evaluation.
-o	main(): gets inputs of Bob, initializes My_Bob() and calls the function verify_output().
-•	bob_inputs.txt: specifies the inputs of Bob.
-•	helpers.py: containing helper functions.
-o	get_inputs(): extracts user input from console.
-o	get_inputs_from_file(): extracts the user input from a textfile.
-o	verify_output(): verifies the output of the MPC in a non-multiparty way.
-o	bits_to_integer(): converts bits in a list to an integer.
-•	4bit-adder.json: the circuit in JSON format.
+    - alice_mpc_compute(): sends the inputs of Alice to Bob, to call the function get_result() of the ot.py module (which contains the garbler OT), and to get the result of the Yao circuit evaluation.
+  - main(): gets the inputs of Alice, initializes My_Alice() and calls the verify_output() function.
+- alice_inputs.txt: specifies the inputs of Alice.
+- alice_to_bob.txt: storing the contents Alice sends to Bob at the beginning of the Yao protocol before the evaluation.
+- bob.py: implements the evaluator (Bob) side of the Yao protocol.
+  - My_Bob(): main class for the evaluator.
+    - listen(): listens for the contents of Alice at the beginning of the Yao protocol and then calls bob_mpc_compute().
+    - bob_mpc_compute(): calls the function get_result() of the ot.py module (which contains the evaluator OT and evaluates the Yao circuit), and gets the result of the Yao circuit evaluation.
+  - main(): gets inputs of Bob, initializes My_Bob() and calls the function verify_output().
+- bob_inputs.txt: specifies the inputs of Bob.
+- helpers.py: containing helper functions.
+  - get_inputs(): extracts user input from console.
+  - get_inputs_from_file(): extracts the user input from a textfile.
+  - verify_output(): verifies the output of the MPC in a non-multiparty way.
+  - bits_to_integer(): converts bits in a list to an integer.
+- 4bit-adder.json: the circuit in JSON format.
 
 ## Installation
 The project depends on the packages ZeroMQ, Fernet and SymPy. Install all dependencies with:
