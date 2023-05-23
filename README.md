@@ -1,6 +1,6 @@
 # Secure Multi-Party Computation with the Yao protocol
 ## General
-The goal of the project was to implement the Yao protocol between the two parties Alice (Garbler) and Bob (Evaluator). The implementation of the Github repository “Secure Multi-Party Computation” was used (Roques und Risson 2020)
+The goal of the project was to implement the Yao protocol between the two parties Alice (Garbler) and Bob (Evaluator). The implementation of the Github repository “Secure Multi-Party Computation” was used (Roques und Risson 2020)-
 
 ## Circuit
 I implemented a circuit to compute the function of the sum of a set of values. The requirement for the circuit was to deal with at least 4-bit numbers as input. The scripts Bob.py and Alice.py accept as input up to the highest 4-bit number 1111_2  (15_2). The circuit outputs 5-bit numbers. 
