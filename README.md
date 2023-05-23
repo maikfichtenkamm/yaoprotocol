@@ -86,6 +86,7 @@ Then, The communication of the OT, the result of the evaluated circuit and the c
 ## Communication
 ### Alice to Bob
 ![image](https://github.com/maikfichtenkamm/yaoprotocol/assets/62957774/8725b692-10eb-4c23-a734-e30e3f00be16)
+
 ### Bob to Alice
 ![image](https://github.com/maikfichtenkamm/yaoprotocol/assets/62957774/c13320bc-b766-4024-83f5-fb3725cdf9bb)
 
