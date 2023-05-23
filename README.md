@@ -46,11 +46,11 @@ Thus, a 2 as the last digit represents an input from Alice, a 3 an input from Bo
 
 ## Functionalities
 From the given GitHub repository (Roques und Risson 2020), I reused the modules main.py, ot.py, util.py, and yao.py. In contrast to the library, I have separated the functionality of the creator (Alice) and evaluator (Bob) into the Python scripts alice.py and bob.py. In the following, I will summarize the functions of the implemented modules. 
-•	alice.py: implements the garbler (Alice) side of the Yao protocol.
-o	My_Alice(): main class for the garbler.
-	start(): starts the Yao protocol and send the circuit, garbled tables, external values.
-	print_alice_to_bob(): prints the contents Alice sends to Bob at the beginning of the Yao protocol in the file alice_to_bob.txt.
-	alice_mpc_compute(): sends the inputs of Alice to Bob, to call the function get_result() of the ot.py module (which contains the garbler OT), and to get the result of the Yao circuit evaluation.
+-	alice.py: implements the garbler (Alice) side of the Yao protocol.
+  -	My_Alice(): main class for the garbler.
+    - start(): starts the Yao protocol and send the circuit, garbled tables, external values.
+    - print_alice_to_bob(): prints the contents Alice sends to Bob at the beginning of the Yao protocol in the file alice_to_bob.txt.
+    - alice_mpc_compute(): sends the inputs of Alice to Bob, to call the function get_result() of the ot.py module (which contains the garbler OT), and to get the result of the Yao circuit   evaluation.
 o	main(): gets the inputs of Alice, initializes My_Alice() and calls the verify_output() function.
 •	alice_inputs.txt: specifies the inputs of Alice.
 •	alice_to_bob.txt: storing the contents Alice sends to Bob at the beginning of the Yao protocol before the evaluation.
