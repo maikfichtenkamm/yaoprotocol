@@ -19,6 +19,10 @@ This results in the following process shown by figure 3: first a half adder is u
 Figure 3: A 4-bit adder
 
 For instance, assume that Alice’s input is 4 und Bob’s 5. 4 is as binary 4-bit number 0100 and 5 0101. For the summation, the individual bits are encoded in the following way:
+| A4 | A3 | A2  | A1 |
+| ---| -- | --- | -- |
+| 0  | 1  | 0   | 0  |
+
 A4	A3	A2	A1
 0	1	0	0
 Figure 4: Mapping Alice's input to wires
