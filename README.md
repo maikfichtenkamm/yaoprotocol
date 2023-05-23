@@ -12,8 +12,6 @@ Figure 1: Half adder (Saini 2022)
 Figure 2 depicts a full adder used to add the remaining binary numbers and their potential carry inputs.
  
 ![image](https://github.com/maikfichtenkamm/yaoprotocol/assets/62957774/12a0c570-1f8b-426a-b516-7e7a1b14284c)
-
-
 Figure 2: Full adder (Saini 2022)
 
 This results in the following process shown by figure 3: first a half adder is used for the inputs A1 and B1, then three full adders can be used for the remaining inputs.
