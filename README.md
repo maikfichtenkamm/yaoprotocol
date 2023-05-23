@@ -20,22 +20,26 @@ Figure 3: A 4-bit adder
 
 For instance, assume that Alice’s input is 4 und Bob’s 5. 4 is as binary 4-bit number 0100 and 5 0101. For the summation, the individual bits are encoded in the following way:
 | A4| A3| A2| A1|
-|---|---|---|---| Mapping Alice's input to wires
+|---|---|---|---| 
 | 0 | 1 | 0 | 0 |
+Mapping Alice's input to wires
 
 | B4| B3| B2| B1|
 |---|---|---|---| Mapping Bob's input to variables
 | 0 | 1 | 0 | 1 |
+Mapping Bob's input to variables
 
 Since the summation goes from less to the most significant bits, the representation and the flow of figure 3 are reversed. In the JSON format of the circuit, the bits can also be mapped to the wires.
 
 | A4 | A3 | A2 | A1 |
-|----|----|----|----| Mapping Alice’s inputs to wires
+|----|----|----|----| 
 | 32 | 22 | 12 | 2  |
+Mapping Alice’s inputs to wires
 
 | B4 | B3 | B2 | B1 |
-|----|----|----|----| Mapping Bob's input to wires
+|----|----|----|----| 
 | 33 | 23 | 13 | 3  |
+Mapping Bob's input to wires
 
 Thus, a 2 as the last digit represents an input from Alice, a 3 an input from Bob, a 1 a carry input bit, and a 5 an output. This representation is aligned to the JSON format of the given Python library (Roques und Risson 2020).
 
