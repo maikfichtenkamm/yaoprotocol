@@ -39,7 +39,7 @@ class My_Bob(Bob):
         try:
             for entry in self.socket.poll_socket():
                 self.socket.send(True)
-                result = self.send_evaluation(entry, inputs)
+                result = self.bob_mpc_compute(entry, inputs)
                 return result
         except KeyboardInterrupt:
             logging.info("Stop listening")
