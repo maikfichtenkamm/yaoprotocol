@@ -3,12 +3,16 @@
 The goal of the project was to implement the Yao protocol between the two parties Alice (Garbler) and Bob (Evaluator). The implementation of the Github repository “Secure Multi-Party Computation” was used (Roques und Risson 2020)-
 
 ## Circuit
-I implemented a circuit to compute the function of the sum of a set of values. The requirement for the circuit was to deal with at least 4-bit numbers as input. The scripts Bob.py and Alice.py accept as input up to the highest 4-bit number 1111_2  (15_2). The circuit outputs 5-bit numbers. 
-The 4-bit adder is constructed for the binary input as follows. Figure 1 visualizes a half-adder, which can be used to add the least significant bits since there is no carry input for them. 
+I implemented a circuit to compute the function of the sum of a set of values. The requirement for the circuit was to deal with at least 4-bit numbers as input. The scripts Bob.py and Alice.py accept as input up to the highest 4-bit number 1111  (15). The circuit outputs 5-bit numbers. 
+The 4-bit adder is constructed for the binary input as follows. Figure 1 visualizes a half-adder, which can be used to add the least significant bits since there is no carry input for them.
+
 ![image](https://github.com/maikfichtenkamm/yaoprotocol/assets/62957774/0993a18c-a39f-4b7c-8b12-7cf976d24411)
 Figure 1: Half adder (Saini 2022) 
+
 Figure 2 depicts a full adder used to add the remaining binary numbers and their potential carry inputs.
  
+ ![image](https://github.com/maikfichtenkamm/yaoprotocol/assets/62957774/314e8a01-36f4-45fd-bb86-fafa201e7d5f)
+
 Figure 2: Full adder (Saini 2022)
 This results in the following process shown by figure 3: first a half adder is used for the inputs A1 and B1, then three full adders can be used for the remaining inputs.
  
