@@ -14,6 +14,7 @@ Figure 2 depicts a full adder used to add the remaining binary numbers and their
  ![image](https://github.com/maikfichtenkamm/yaoprotocol/assets/62957774/314e8a01-36f4-45fd-bb86-fafa201e7d5f)
 
 Figure 2: Full adder (Saini 2022)
+
 This results in the following process shown by figure 3: first a half adder is used for the inputs A1 and B1, then three full adders can be used for the remaining inputs.
  
 Figure 3: A 4-bit adder
