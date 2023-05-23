@@ -44,7 +44,7 @@ class My_Bob(Bob):
         except KeyboardInterrupt:
             logging.info("Stop listening")
 
-    def send_evaluation(self, entry, inputs):
+    def bob_mpc_compute(self, entry, inputs):
         """Evaluate yao circuit for all Bob and Alice's inputs and
         send back the results. Aligned to the Python library "Secure Multi-Party Computation" 
 
