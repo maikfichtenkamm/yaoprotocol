@@ -69,16 +69,18 @@ From the given GitHub repository (Roques und Risson 2020), I reused the modules 
 
 ## Installation
 The project depends on the packages ZeroMQ, Fernet and SymPy. Install all dependencies with:
+
 ```pip3 install --user pyzmq cryptography sympy```
 
 ## Usage
 The participants Alice and Bob can provide input via the console or a specified text file. The inputs can be inserted in the corresponding input files alice_inputs.txt and bob_inputs.txt. New input files can also be specified, but the numbers should be in the format: 2, 3, 6, …
 To start the script, open two terminals and run in the first for the evaluator
-•	for input by file: ```./bob.py <path/to/textfileOfBob>```
-•	for input via terminal: ```./bob.py ```
+- for input by file: ```./bob.py <path/to/textfileOfBob>```
+- for input via terminal: ```./bob.py ```
 and in the second for the garbler:
-•	for input by file: ```./alice.py <path/to/textfileOfAlice>```
-•	for input via terminal: ```./alice.py```
+- for input by file: ```./alice.py <path/to/textfileOfAlice>```
+- for input via terminal: ```./alice.py```
+- 
 Then, The communication of the OT, the result of the evaluated circuit and the correctness of the computation is printed in both consoles. It should be noted that error messages may occur due to incorrect input and input as textfile should be prioritized since the result can then be verified in a non-multiparty way. The contents Alice sends to Bob will be printed into the file alice_to_bob.txt.
 
 ## Communication
