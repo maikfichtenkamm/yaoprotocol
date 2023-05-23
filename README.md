@@ -1,4 +1,4 @@
-# yaoprotocol
+# Secure Multi-Party Computation with the Yao protocol
 ## General
 The goal of the project was to implement the Yao protocol between the two parties Alice (Garbler) and Bob (Evaluator). The implementation of the Github repository “Secure Multi-Party Computation” was used (Roques und Risson 2020)
 
