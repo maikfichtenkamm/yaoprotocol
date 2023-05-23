@@ -18,7 +18,7 @@ This results in the following process shown by figure 3: first a half adder is u
  ![image](https://github.com/maikfichtenkamm/yaoprotocol/assets/62957774/9248dae0-e325-4b6d-abb6-c444bf39aead)
 Figure 3: A 4-bit adder
 
-For instance, assume that Alice’s input is 4_10 und Bob’s 5_10. 4_10 is as binary 4-bit number 0100_2 and 5_10 0101_2. For the summation, the individual bits are encoded in the following way:
+For instance, assume that Alice’s input is 4 und Bob’s 5. 4 is as binary 4-bit number 0100 and 5 0101. For the summation, the individual bits are encoded in the following way:
 A4	A3	A2	A1
 0	1	0	0
 Figure 4: Mapping Alice's input to wires
